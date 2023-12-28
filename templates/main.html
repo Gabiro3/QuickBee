@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>QuickBee | Dashboard</title>
+</head>
+
+<body>
+  <div class="content">
+    <nav>
+      <i class='bx bx-menu' style="color: white"></i>
+      <form action="#">
+          <div class="form-input">
+              <input type="search" placeholder="Search...">
+              <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+          </div>
+      </form>
+      <a href="#" class="notif">
+          <i class='bx bx-bell'></i>
+          <span class="count">{{announcements.count}}</span>
+      </a>
+      <a href="{% url 'user-profile' request.user.id %}" class="profile">
+          <img src="{{user.avatar.url}}">
+      </a>
+  </nav>
+  {% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+  {% endif %}
+  </div>
+  {% block content %}
+  {% endblock content %}
+  <script src="{% static 'index.js' %}"></script>
+  <script>
+    setTimeout(function(){
+      if ($('#msg').length > 0) {
+        $('#msg').remove();
+      }
+    }, 2000)
+  </script>
+</body>

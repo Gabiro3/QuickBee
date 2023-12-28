@@ -1,0 +1,145 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Sidebar -->
+<div class="sidebar">
+    <a href="#" class="logo">
+        <img src="{% static 'images/bee-logo.png' %}" alt="Bee Image" style="width:50px; margin-left: 1rem;">
+        <div class="logo-name"><span>Quick</span>Bee</div>
+    </a>
+    <ul class="side-menu">
+        <li class="active"><a href="{% url 'home' %}"><i class='bx bx-bar-chart-alt'></i>Overview</a></li>
+        <li><a href="{% url 'view-orders' %}"><i class='bx bxs-package'></i>Orders</a></li>
+        <li><a href="{% url 'view-companies' %}"><i class='bx bx-building'></i>Companies</a></li>
+        <li><a href="{% url 'view-invoices' %}"><i class='bx bx-file'></i>Invoices</a></li>
+        <li><a href="{% url 'user-profile' request.user.id%}"><i class='bx bx-user'></i>Account</a></li>
+        <li><a href="{% url 'view-orders' %}"><i class='bx bx-help-circle'></i>FAQs</a></li>
+
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="{% url 'logout' %}" class="logout">
+                <i class='bx bx-log-out-circle'></i>
+                Logout
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="content">
+    <!-- Navbar -->
+
+    <!-- End of Navbar -->
+
+    <main>
+        <div class="header">
+            <div class="left">
+                <h1>Dashboard</h1>
+                <ul class="breadcrumb">
+                    <li><a href="#">
+                            Analytics
+                        </a></li>
+                    /
+                    <li><a href="#" class="active">Welcome!</a></li>
+                </ul>
+            </div>
+            <a href="#" class="report">
+                <i class='bx bxs-book-open'></i>
+                <span>How to use QuickBee</span>
+            </a>
+            
+        </div>
+
+        <!-- Insights -->
+        <ul class="insights">
+            <li>
+                <i class='bx bxs-package'></i>
+                <span class="info">
+                    <h3>{{ orders.count }}</h3>
+                    <p>Orders</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bx-file'></i>
+                <span class="info">
+                    <h3>{{ invoices.count }}</h3>
+                    <p>Invoices</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bx-building'></i>
+                <span class="info">
+                    <h3>{{ companies.count }}</h3>
+                    <p>Companies</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bx-dollar-circle'></i>
+                <span class="info">
+                    <h3>$6,742</h3>
+                    <p>Total Sales</p>
+                </span>
+            </li>
+        </ul>
+        
+        <!-- End of Insights -->
+
+        <div class="bottom-data">
+            <div class="orders">
+                <div class="header">
+                    <i class='bx bx-receipt'></i>
+                    <h3>Recent Assignments</h3>
+                    <i class='bx bx-filter'></i>
+                    <i class='bx bx-search'></i>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Details</th>
+                            <th>Assigned Class</th>
+                            <th>Submission Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for assignment in assignments %}
+                        <tr>
+                            <td>
+                                <p>{{assignment.name}}</p>
+                            </td>
+                            <td>S{{assignment.assigned_class}}</td>
+                            <td>{{assignment.submission_date}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Reminders -->
+            <div class="reminders">
+                <div class="header">
+                    <i class='bx bx-note'></i>
+                    <h3>Today's Activities</h3>
+                    <i class='bx bx-filter'></i>
+                    <a href="{% url 'home' %}"><i class='bx bx-plus'></i></a>
+                </div>
+                <ul class="task-list">
+                    {% for field in  activities_today %}
+                    <li class="completed">
+                        <div class="task-title">
+                            <i class='bx bx-check-circle'></i>
+                            <p>{{field.name}}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- End of Reminders-->
+
+        </div>
+
+    </main>
+
+</div>
+
+
+{% endblock content %}
